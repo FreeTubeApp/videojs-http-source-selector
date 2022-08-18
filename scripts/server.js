@@ -2,7 +2,7 @@
 
 const http = require('http');
 const portscanner = require('portscanner');
-const nodeStatic = require('node-static');
+const nodeStatic = require('@brettz9/node-static');
 
 const files = new nodeStatic.Server(process.cwd(), {cache: false});
 
