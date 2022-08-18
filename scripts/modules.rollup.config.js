@@ -30,6 +30,8 @@ export default {
   plugins: [
     json(),
     babel({
+      babelHelpers: 'external',
+      extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', 'ts', 'tsx'],
       babelrc: false,
       exclude: 'node_modules/**',
       presets: [
