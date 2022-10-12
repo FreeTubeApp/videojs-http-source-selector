@@ -18,7 +18,6 @@ var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
 
   _proto.handleClick = function handleClick() {
     var selected = this.options_;
-    console.log("Changing quality to:", selected.label);
 
     _MenuItem.prototype.handleClick.call(this);
 
@@ -67,8 +66,8 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
           qualityLevels[i].enabled = i == 0;
         }
       } else if (options["default"] = 'high') {
-        for (var i = 0; i < qualityLevels.length; i++) {
-          qualityLevels[i].enabled = i == qualityLevels.length - 1;
+        for (var _i = 0; _i < qualityLevels.length; _i++) {
+          qualityLevels[_i].enabled = _i == qualityLevels.length - 1;
         }
       }
     } // Bind update to qualityLevels changes
@@ -155,9 +154,8 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
   return SourceMenuButton;
 }(MenuButton);
 
-var defaults = {}; // Cross-compatibility for Video.js 5 and 6.
-
-var registerPlugin = videojs.registerPlugin || videojs.plugin; // const dom = videojs.dom || videojs;
+var defaults = {};
+var registerPlugin = videojs.registerPlugin; // const dom = videojs.dom || videojs;
 
 /**
 * Function to invoke when the player is ready.
@@ -175,11 +173,9 @@ var registerPlugin = videojs.registerPlugin || videojs.plugin; // const dom = vi
 */
 
 var onPlayerReady = function onPlayerReady(player, options) {
-  player.addClass('vjs-http-source-selector');
-  console.log("videojs-http-source-selector initialized!");
-  console.log("player.techName_:" + player.techName_); //This plugin only supports level selection for HLS playback
+  player.addClass('vjs-http-source-selector'); //This plugin only supports level selection for HLS playback
 
-  if (player.techName_ != 'Html5') {
+  if (player.techName_ !== 'Html5') {
     return false;
   }
   /**
@@ -193,10 +189,7 @@ var onPlayerReady = function onPlayerReady(player, options) {
     player.qualityLevels();
     videojs.log('loadmetadata event'); // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
 
-    if (player.videojs_http_source_selector_initialized == 'undefined' || player.videojs_http_source_selector_initialized == true) {
-      console.log("player.videojs_http_source_selector_initialized == true");
-    } else {
-      console.log("player.videojs_http_source_selector_initialized == false");
+    if (!player.videojs_http_source_selector_initialized == 'undefined' && !player.videojs_http_source_selector_initialized) {
       player.videojs_http_source_selector_initialized = true;
       var controlBar = player.controlBar,
           fullscreenToggle = controlBar.getChild('fullscreenToggle').el();
