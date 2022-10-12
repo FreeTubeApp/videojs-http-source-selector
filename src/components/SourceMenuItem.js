@@ -12,12 +12,11 @@ class SourceMenuItem extends MenuItem
   }
 
   handleClick() {
-    var selected = this.options_;
-    console.log("Changing quality to:", selected.label);
+    let selected = this.options_;
     super.handleClick();
 
-    var levels = this.player().qualityLevels();
-    for(var i = 0; i < levels.length; i++) {
+    const levels = this.player().qualityLevels();
+    for(let i = 0; i < levels.length; i++) {
       if (selected.index == levels.length) {
         // If this is the Auto option, enable all renditions for adaptive selection
         levels[i].enabled = true;
@@ -30,7 +29,7 @@ class SourceMenuItem extends MenuItem
   }
 
   update() {
-    var selectedIndex = this.player().qualityLevels().selectedIndex;
+    let selectedIndex = this.player().qualityLevels().selectedIndex;
     this.selected(this.options_.index == selectedIndex);
   }
 }

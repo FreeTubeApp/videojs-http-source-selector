@@ -10,17 +10,17 @@ class SourceMenuButton extends MenuButton
 
     MenuButton.apply(this, arguments);
 
-    var qualityLevels = this.player().qualityLevels();
+    let qualityLevels = this.player().qualityLevels();
 
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
     if (options && options.default) {
       if (options.default == 'low') {
-        for (var i = 0; i < qualityLevels.length; i++) {
+        for (let i = 0; i < qualityLevels.length; i++) {
           qualityLevels[i].enabled = (i == 0);
         }
       } else if (options.default = 'high') {
-        for (var i = 0; i < qualityLevels.length; i++) {
+        for (let i = 0; i < qualityLevels.length; i++) {
           qualityLevels[i].enabled = (i == (qualityLevels.length - 1));
         }
       }
@@ -45,17 +45,17 @@ class SourceMenuButton extends MenuButton
   }
 
   createItems() {
-    var menuItems = [];
-    var levels = this.player().qualityLevels();
-    var labels = [];
+    let menuItems = [];
+    let levels = this.player().qualityLevels();
+    let labels = [];
 
-    for (var i = 0; i < levels.length; i++) {
-      var index = levels.length - (i + 1);
-      var selected = (index === levels.selectedIndex);
+    for (let i = 0; i < levels.length; i++) {
+      let index = levels.length - (i + 1);
+      let selected = (index === levels.selectedIndex);
 
       // Display height if height metadata is provided with the stream, else use bitrate
-      var label = `${index}`;
-      var sortVal = index;
+      let label = `${index}`;
+      let sortVal = index;
       if (levels[index].height) {
         label = `${levels[index].height}p`;
         sortVal = parseInt(levels[index].height, 10)

@@ -66,8 +66,8 @@
   ],
   "dependencies": {
     "global": "^4.4.0",
-    "video.js": "^7.20.2",
-    "videojs-contrib-quality-levels": "^2.1.0"
+    "video.js": "^7.20.3",
+    "videojs-contrib-quality-levels": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
