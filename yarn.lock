@@ -4388,8 +4388,8 @@ rimraf@~2.4.3:
     glob "^6.0.1"
 
 rollup@^2.78.0:
-  version "2.78.0"
-  resolved "https://registry.npmjs.org/rollup/-/rollup-2.78.0.tgz"
+  version "2.79.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.79.1.tgz#bedee8faef7c9f93a2647ac0108748f497f081c7"
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -4492,8 +4492,8 @@ signal-exit@^3.0.0, signal-exit@^3.0.7:
   resolved "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz"
 
 sinon@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.npmjs.org/sinon/-/sinon-14.0.0.tgz"
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-14.0.1.tgz#9f02e13ad86b695c0c554525e3bf7f8245b31a9c"
   dependencies:
     "@sinonjs/commons" "^1.8.3"
     "@sinonjs/fake-timers" "^9.1.2"
