@@ -80,13 +80,7 @@ class SourceMenuButton extends MenuButton {
 
     // Sort menu items by their label name with Auto always first
     menuItems.sort(function(a, b) {
-      if (a.options_.sortVal < b.options_.sortVal) {
-        return 1;
-      } else if (a.options_.sortVal > b.options_.sortVal) {
-        return -1;
-      }
-      return 0;
-
+      return b.options_.sortVal - a.options_.sortVal;
     });
 
     return menuItems;
