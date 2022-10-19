@@ -23,10 +23,10 @@ var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
     _MenuItem.prototype.handleClick.call(this);
     var levels = this.player().qualityLevels();
     for (var i = 0; i < levels.length; i++) {
-      if (selected.index == levels.length) {
+      if (selected.index === levels.length) {
         // If this is the Auto option, enable all renditions for adaptive selection
         levels[i].enabled = true;
-      } else if (selected.index == i) {
+      } else if (selected.index === i) {
         levels[i].enabled = true;
       } else {
         levels[i].enabled = false;
@@ -35,7 +35,7 @@ var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
   };
   _proto.update = function update() {
     var selectedIndex = this.player().qualityLevels().selectedIndex;
-    this.selected(this.options_.index == selectedIndex);
+    this.selected(this.options_.index === selectedIndex);
   };
   return SourceMenuItem;
 }(MenuItem);
@@ -53,13 +53,13 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
     if (options && options["default"]) {
-      if (options["default"] == 'low') {
+      if (options["default"] === 'low') {
         for (var i = 0; i < qualityLevels.length; i++) {
-          qualityLevels[i].enabled = i == 0;
+          qualityLevels[i].enabled = i === 0;
         }
-      } else if (options["default"] = 'high') {
+      } else if (options["default"] === 'high') {
         for (var _i = 0; _i < qualityLevels.length; _i++) {
-          qualityLevels[_i].enabled = _i == qualityLevels.length - 1;
+          qualityLevels[_i].enabled = _i === qualityLevels.length - 1;
         }
       }
     }
@@ -128,9 +128,8 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
         return 1;
       } else if (a.options_.sortVal > b.options_.sortVal) {
         return -1;
-      } else {
-        return 0;
       }
+      return 0;
     });
     return menuItems;
   };
@@ -158,7 +157,7 @@ var registerPlugin = videojs__default["default"].registerPlugin;
 */
 var onPlayerReady = function onPlayerReady(player, options) {
   player.addClass('vjs-http-source-selector');
-  //This plugin only supports level selection for HLS playback
+  // This plugin only supports level selection for HLS playback
   if (player.techName_ !== 'Html5') {
     return false;
   }
@@ -169,35 +168,34 @@ var onPlayerReady = function onPlayerReady(player, options) {
   *
   **/
   player.on(['loadedmetadata'], function (e) {
-    player.qualityLevels();
     videojs__default["default"].log('loadmetadata event');
     // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
-    if (!player.videojs_http_source_selector_initialized == 'undefined' && !player.videojs_http_source_selector_initialized) {
-      player.videojs_http_source_selector_initialized = true;
-      var controlBar = player.controlBar,
-        fullscreenToggle = controlBar.getChild('fullscreenToggle').el();
+    if (!player.videojsHTTPSouceSelectorInitialized) {
+      player.videojsHTTPSouceSelectorInitialized = true;
+      var controlBar = player.controlBar;
+      var fullscreenToggle = controlBar.getChild('fullscreenToggle').el();
       controlBar.el().insertBefore(controlBar.addChild('SourceMenuButton').el(), fullscreenToggle);
     }
   });
 };
 
 /**
-* A video.js plugin.
-*
-* In the plugin function, the value of `this` is a video.js `Player`
-* instance. You cannot rely on the player being in a "ready" state here,
-* depending on how the plugin is invoked. This may or may not be important
-* to you; if not, remove the wait for "ready"!
-*
-* @function httpSourceSelector
-* @param    {Object} [options={}]
-*           An object of options left to the plugin author to define.
-*/
+  * A video.js plugin.
+  *
+  * In the plugin function, the value of `this` is a video.js `Player`
+  * instance. You cannot rely on the player being in a "ready" state here,
+  * depending on how the plugin is invoked. This may or may not be important
+  * to you; if not, remove the wait for "ready"!
+  *
+  * @function httpSourceSelector
+  * @param    {Object} [options={}]
+  *           An object of options left to the plugin author to define.
+  */
 var httpSourceSelector = function httpSourceSelector(options) {
   var _this = this;
   this.ready(function () {
     onPlayerReady(_this, videojs__default["default"].mergeOptions(defaults, options));
-    //this.getChild('controlBar').addChild('SourceMenuButton', {});
+    // this.getChild('controlBar').addChild('SourceMenuButton', {});
   });
 
   videojs__default["default"].registerComponent('SourceMenuButton', SourceMenuButton);

@@ -64,9 +64,11 @@
     "src/",
     "test/"
   ],
+  "peerDependencies": {
+    "video.js": "^7"
+  },
   "dependencies": {
     "global": "^4.4.0",
-    "video.js": "^7.20.3",
     "videojs-contrib-quality-levels": "^2.2.0"
   },
   "devDependencies": {
@@ -101,6 +103,7 @@
     "semver": "^7.3.7",
     "sinon": "^14.0.0",
     "uglify-js": "^3.17.0",
+    "video.js": "^7.20.3",
     "videojs-standard": "^9.0.1"
   }
 }
