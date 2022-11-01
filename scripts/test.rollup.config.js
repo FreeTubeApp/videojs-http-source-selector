@@ -14,7 +14,13 @@ export default {
   input: 'test/**/*.test.js',
   output: {
     file: 'test/dist/bundle.js',
-    format: 'iife'
+    format: 'iife',
+    globals: {
+      'qunit': 'QUnit',
+      'qunitjs': 'QUnit',
+      'sinon': 'sinon',
+      'video.js': 'videojs'
+    },
   },
   external: [
     'qunit',
@@ -22,12 +28,6 @@ export default {
     'sinon',
     'video.js'
   ],
-  globals: {
-    'qunit': 'QUnit',
-    'qunitjs': 'QUnit',
-    'sinon': 'sinon',
-    'video.js': 'videojs'
-  },
   plugins: [
     multiEntry({
       exports: false
@@ -42,7 +42,6 @@ export default {
       sourceMap: false
     }),
     babel({
-      babelHelpers: 'external',
       extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', 'ts', 'tsx'],
       babelrc: false,
       exclude: 'node_modules/**',
@@ -53,7 +52,6 @@ export default {
         }]
       ],
       plugins: [
-        '@babel/external-helpers',
         '@babel/transform-object-assign'
       ]
     })

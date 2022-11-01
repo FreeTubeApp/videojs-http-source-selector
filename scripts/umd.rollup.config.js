@@ -15,7 +15,13 @@ export default {
   output: {
     name: 'videojs-http-source-selector',
     file: 'dist/videojs-http-source-selector.js',
-    format: 'umd'
+    format: 'umd',
+    globals: {
+      'video.js': 'videojs',
+      'global': 'window',
+      'global/window': 'window',
+      'global/document': 'document'
+    },
   },
   external: [
     'global',
@@ -23,12 +29,6 @@ export default {
     'global/document',
     'video.js'
   ],
-  globals: {
-    'video.js': 'videojs',
-    'global': 'window',
-    'global/window': 'window',
-    'global/document': 'document'
-  },
   plugins: [
     resolve({
       browser: true,
@@ -40,7 +40,6 @@ export default {
       sourceMap: false
     }),
     babel({
-      babelHelpers: 'external',
       extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', 'ts', 'tsx'],
       babelrc: false,
       exclude: 'node_modules/**',
@@ -51,7 +50,6 @@ export default {
         }]
       ],
       plugins: [
-        '@babel/external-helpers',
         '@babel/transform-object-assign'
       ]
     })

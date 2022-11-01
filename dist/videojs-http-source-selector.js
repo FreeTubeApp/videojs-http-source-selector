@@ -1,6 +1,6 @@
 /**
  * videojs-http-source-selector
- * @version 1.1.6
+ * @version 1.1.7
  * @copyright 2022 Justin Fujita <Justin@pivotshare.com>
  * @license MIT
  */
@@ -10,16 +10,31 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global["videojs-http-source-selector"] = factory(global.videojs));
 })(this, (function (videojs) { 'use strict';
 
-  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+  var version = "1.1.7";
 
-  var videojs__default = /*#__PURE__*/_interopDefaultLegacy(videojs);
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    _setPrototypeOf(subClass, superClass);
+  }
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+    return _setPrototypeOf(o, p);
+  }
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self;
+  }
 
-  var version = "1.1.6";
-
-  var MenuItem = videojs__default["default"].getComponent('MenuItem');
-  var Component = videojs__default["default"].getComponent('Component');
+  var MenuItem = videojs.getComponent('MenuItem');
+  var Component = videojs.getComponent('Component');
   var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
-    babelHelpers.inheritsLoose(SourceMenuItem, _MenuItem);
+    _inheritsLoose(SourceMenuItem, _MenuItem);
     function SourceMenuItem(player, options) {
       options.selectable = true;
       options.multiSelectable = false;
@@ -49,13 +64,13 @@
   }(MenuItem);
   Component.registerComponent('SourceMenuItem', SourceMenuItem);
 
-  var MenuButton = videojs__default["default"].getComponent('MenuButton');
+  var MenuButton = videojs.getComponent('MenuButton');
   var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
-    babelHelpers.inheritsLoose(SourceMenuButton, _MenuButton);
+    _inheritsLoose(SourceMenuButton, _MenuButton);
     function SourceMenuButton(player, options) {
       var _this;
       _this = _MenuButton.call(this, player, options) || this;
-      MenuButton.apply(babelHelpers.assertThisInitialized(_this), arguments);
+      MenuButton.apply(_assertThisInitialized(_this), arguments);
       var qualityLevels = _this.player().qualityLevels();
 
       // Handle options: We accept an options.default value of ( high || low )
@@ -73,12 +88,12 @@
       }
 
       // Bind update to qualityLevels changes
-      _this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs__default["default"].bind(babelHelpers.assertThisInitialized(_this), _this.update));
+      _this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs.bind(_assertThisInitialized(_this), _this.update));
       return _this;
     }
     var _proto = SourceMenuButton.prototype;
     _proto.createEl = function createEl() {
-      return videojs__default["default"].dom.createEl('div', {
+      return videojs.dom.createEl('div', {
         className: 'vjs-http-source-selector vjs-menu-button vjs-menu-button-popup vjs-control vjs-button'
       });
     };
@@ -141,7 +156,7 @@
 
   // Default options for the plugin.
   var defaults = {};
-  var registerPlugin = videojs__default["default"].registerPlugin;
+  var registerPlugin = videojs.registerPlugin;
   // const dom = videojs.dom || videojs;
 
   /**
@@ -171,7 +186,7 @@
     *
     **/
     player.on(['loadedmetadata'], function (e) {
-      videojs__default["default"].log('loadmetadata event');
+      videojs.log('loadmetadata event');
       // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
       if (!player.videojsHTTPSouceSelectorInitialized) {
         player.videojsHTTPSouceSelectorInitialized = true;
@@ -197,12 +212,12 @@
   var httpSourceSelector = function httpSourceSelector(options) {
     var _this = this;
     this.ready(function () {
-      onPlayerReady(_this, videojs__default["default"].mergeOptions(defaults, options));
+      onPlayerReady(_this, videojs.mergeOptions(defaults, options));
       // this.getChild('controlBar').addChild('SourceMenuButton', {});
     });
 
-    videojs__default["default"].registerComponent('SourceMenuButton', SourceMenuButton);
-    videojs__default["default"].registerComponent('SourceMenuItem', SourceMenuItem);
+    videojs.registerComponent('SourceMenuButton', SourceMenuButton);
+    videojs.registerComponent('SourceMenuItem', SourceMenuItem);
   };
 
   // Register the plugin with video.js.
