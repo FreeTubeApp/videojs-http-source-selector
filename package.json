@@ -56,13 +56,10 @@
     ]
   },
   "files": [
-    "CONTRIBUTING.md",
+    "README.md",
     "dist/",
-    "docs/",
-    "index.html",
-    "scripts/",
-    "src/",
-    "test/"
+    "LICENSE",
+    "src/"
   ],
   "peerDependencies": {
     "video.js": "^7"
