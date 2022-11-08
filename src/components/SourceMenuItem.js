@@ -18,20 +18,13 @@ class SourceMenuItem extends MenuItem {
     const levels = this.player().qualityLevels();
 
     for (let i = 0; i < levels.length; i++) {
-      if (selected.index === levels.length) {
-        // If this is the Auto option, enable all renditions for adaptive selection
-        levels[i].enabled = true;
-      } else if (selected.index === i) {
-        levels[i].enabled = true;
-      } else {
-        levels[i].enabled = false;
-      }
+      // If this is the Auto option, enable all renditions for adaptive selection
+      levels[i].enabled = selected.index === levels.length || selected.index === i;
     }
   }
 
   update() {
     const selectedIndex = this.player().qualityLevels().selectedIndex;
-
     this.selected(this.options_.index === selectedIndex);
   }
 }

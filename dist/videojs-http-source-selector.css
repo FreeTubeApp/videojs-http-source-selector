@@ -4,6 +4,4 @@
  * @copyright 2022 Justin Fujita <Justin@pivotshare.com>
  * @license MIT
  */
-.video-js.vjs-http-source-selector {
-  display: block;
-}
+.video-js.vjs-http-source-selector { display: block; }

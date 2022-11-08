@@ -13,7 +13,7 @@ class SourceMenuButton extends MenuButton {
 
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
-    if (options && options.default) {
+    if (options && options?.default) {
       if (options.default === 'low') {
         for (let i = 0; i < qualityLevels.length; i++) {
           qualityLevels[i].enabled = (i === 0);
@@ -48,8 +48,7 @@ class SourceMenuButton extends MenuButton {
     const levels = this.player().qualityLevels();
     const labels = [];
 
-    for (let i = 0; i < levels.length; i++) {
-      const index = levels.length - (i + 1);
+    for (let index = levels.length - 1; index >= 0; index--) {
       const selected = (index === levels.selectedIndex);
 
       // Display height if height metadata is provided with the stream, else use bitrate
@@ -65,7 +64,7 @@ class SourceMenuButton extends MenuButton {
       }
 
       // Skip duplicate labels
-      if (labels.indexOf(label) >= 0) {
+      if (labels.indexOf(label) !== -1) {
         continue;
       }
       labels.push(label);
