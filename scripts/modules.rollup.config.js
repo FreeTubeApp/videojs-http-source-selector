@@ -16,13 +16,13 @@ export default {
     format: 'cjs',
     globals: {
       'video.js': 'videojs'
-    },
+    }
   }, {
     file: 'dist/videojs-http-source-selector.es.js',
     format: 'es',
     globals: {
       'video.js': 'videojs'
-    },
+    }
   }],
   external: [
     'global',

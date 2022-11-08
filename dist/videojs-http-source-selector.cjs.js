@@ -61,7 +61,7 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
 
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
-    if (options && options != null && options["default"]) {
+    if (options && options["default"]) {
       if (options["default"] === 'low') {
         for (var i = 0; i < qualityLevels.length; i++) {
           qualityLevels[i].enabled = i === 0;

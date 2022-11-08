@@ -20,7 +20,7 @@ export default {
       'qunitjs': 'QUnit',
       'sinon': 'sinon',
       'video.js': 'videojs'
-    },
+    }
   },
   external: [
     'qunit',

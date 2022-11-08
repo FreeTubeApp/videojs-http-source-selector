@@ -21,7 +21,7 @@ export default {
       'global': 'window',
       'global/window': 'window',
       'global/document': 'document'
-    },
+    }
   },
   external: [
     'global',

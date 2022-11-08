@@ -25,6 +25,7 @@ class SourceMenuItem extends MenuItem {
 
   update() {
     const selectedIndex = this.player().qualityLevels().selectedIndex;
+
     this.selected(this.options_.index === selectedIndex);
   }
 }
