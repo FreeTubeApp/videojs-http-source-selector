@@ -1,3 +1,24 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [videojs-http-source-selector](#videojs-http-source-selector)
+- [Test it with your stream](#test-it-with-your-stream)
+    - [Labels:](#labels)
+    - [Default settings:](#default-settings)
+      - [Low:](#low)
+      - [High:](#high)
+      - [Auto:](#auto)
+- [Installation](#installation)
+- [Dependencies](#dependencies)
+- [Usage](#usage)
+    - [`<script>` Tag](#script-tag)
+    - [Browserify/CommonJS](#browserifycommonjs)
+    - [RequireJS/AMD](#requirejsamd)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # videojs-http-source-selector
 VideoJS plugin that leverages videojs-contrib-quality-levels plugin to offer manual user-selectable level selection options for adaptive http streams.
 
