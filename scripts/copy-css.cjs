@@ -1,5 +1,8 @@
 const { copyFileSync, existsSync, mkdirSync, watchFile } = require('fs');
 
+/**
+ * Copy source css file to dist foldder.
+ */
 function copy() {
   if (!existsSync(`${__dirname}/../dist/`)) {
     mkdirSync(`${__dirname}/../dist/`, { recursive: true });
