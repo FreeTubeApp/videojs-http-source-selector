@@ -40,19 +40,14 @@
   },
   "keywords": [
     "videojs",
-    "videojs-plugin"
+    "videojs-plugin",
+    "FreeTube",
+    "dash",
+    "quality selector"
   ],
   "author": "Justin Fujita <Justin@pivotshare.com>",
   "contributors": ["ChunkyProgrammer", "FreeTube team"],
   "license": "MIT",
-  "vjsstandard": {
-    "ignore": [
-      "dist",
-      "docs",
-      "test/dist",
-      "test/karma.conf.js"
-    ]
-  },
   "files": [
     "README.md",
     "dist/",
@@ -86,13 +81,8 @@
     "global": "^4.4.0",
     "in-publish": "^2.0.1",
     "jsdoc": "^4.0.0",
-    "karma": "^6.4.1",
-    "karma-qunit": "^4.1.2",
-    "portscanner": "^2.2.0",
-    "qunit": "^2.19.1",
     "rimraf": "^3.0.2",
     "rollup": "^3.2.5",
-    "sinon": "^14.0.2",
     "uglify-js": "^3.17.4",
     "video.js": "^7.20.3"
   }

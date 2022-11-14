@@ -40,6 +40,7 @@ export default {
       sourceMap: false
     }),
     babel({
+      babelHelpers: 'bundled',
       extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', 'ts', 'tsx'],
       babelrc: false,
       exclude: 'node_modules/**',
