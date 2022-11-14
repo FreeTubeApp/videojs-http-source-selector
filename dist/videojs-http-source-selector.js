@@ -1,9 +1,5 @@
-/**
- * videojs-http-source-selector
- * @version 1.1.7
- * @copyright 2022 Justin Fujita <Justin@pivotshare.com>
- * @license MIT
- */
+//! videojs-http-source-selector v1.1.7 ~~ https://github.com/FreeTubeApp/videojs-http-source-selector ~~ MIT License
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('video.js')) :
   typeof define === 'function' && define.amd ? define(['video.js'], factory) :

@@ -1,3 +1,5 @@
+//! videojs-http-source-selector v1.1.7 ~~ https://github.com/FreeTubeApp/videojs-http-source-selector ~~ MIT License
+
 import videojs from 'video.js';
 
 var version = "1.1.7";

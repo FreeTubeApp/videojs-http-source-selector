@@ -1,3 +1,5 @@
+//! videojs-http-source-selector v1.1.7 ~~ https://github.com/FreeTubeApp/videojs-http-source-selector ~~ MIT License
+
 'use strict';
 
 var videojs = require('video.js');
