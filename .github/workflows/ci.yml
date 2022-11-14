@@ -26,6 +26,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build # change to test once we remake tests with static page
+    - run: npm run build-ci # change to test once we remake tests with static page
       env:
            CI: true
