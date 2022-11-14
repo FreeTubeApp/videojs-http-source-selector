@@ -1,13 +1,11 @@
 # videojs-http-source-selector
-
-[![NPM](https://nodei.co/npm/videojs-http-source-selector.png)](https://nodei.co/npm/videojs-http-source-selector/) [![Greenkeeper badge](https://badges.greenkeeper.io/jfujita/videojs-http-source-selector.svg)](https://greenkeeper.io/) 
-
 VideoJS plugin that leverages videojs-contrib-quality-levels plugin to offer manual user-selectable level selection options for adaptive http streams.
 
 ![Alt text](doc/images/example.png "Source selector")
 
-# Test it with your stream [here](https://vod.dev)
+# Test it with your stream 
 
+Fork this project, download it and then open [Index.html](./index.html) in your browser
 Compatible with vjs 7 and up.
 
 ### Labels:
@@ -104,20 +102,6 @@ require(['video.js', 'videojs-contrib-quality-levels', 'videojs-http-source-sele
   player.httpSourceSelector();
 });
 ```
-
-### Building from src
-To build, checkout the repo, run ```npm install``` && ```npm start```,
-go to localhost:9999 (or the next free port) and test out the plugin.
-
-### Pushing
-* ```npm install```
-* ```npm build```
-* ```npm version major/minor/patch```
-* ```git push origin master --tags```
-* ```npm publish```
-
-### WIP: get tagged commits to master to trigger github action builds that publish to npm
-
 ## License
 
 MIT. Copyright (c) Justin Fujita;

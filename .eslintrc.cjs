@@ -1,16 +1,15 @@
 module.exports = {
   // https://eslint.org/docs/user-guide/configuring#using-configuration-files-1
   root: true,
-  plugins: ['markdown', 'jsdoc'],
+  plugins: ['jsdoc'],
   env: {
     commonjs: true,
-    es6: true,
+    es2022: true,
     node: true
   },
 
   parserOptions: {
     impliedStrict: true,
-    ecmaVersion: 2021,
     sourceType: 'module'
   },
 
