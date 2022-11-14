@@ -23,6 +23,9 @@ const registerPlugin = videojs.registerPlugin;
 *
 * @param    {Object} [options={}]
 *           A plain object containing options for the plugin.
+*
+* @return {boolean}
+*         Returns false if not use Html5 tech
 */
 const onPlayerReady = (player, options) => {
   player.addClass('vjs-http-source-selector');
