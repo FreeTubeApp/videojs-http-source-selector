@@ -14,7 +14,7 @@ class SourceMenuItem extends MenuItem {
    * @param {videojs.Player} player
    * A videojs player
    *
-   * @param {{selectable: true, multiSelectable: false}} options
+   * @param {{label, index, selected, sortVal, selectable: true, multiSelectable: false}} options
    * Multiselectable
    *
   */

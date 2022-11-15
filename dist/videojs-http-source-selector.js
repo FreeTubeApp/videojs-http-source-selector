@@ -29,13 +29,33 @@
 
   var MenuItem = videojs.getComponent('MenuItem');
   var Component = videojs.getComponent('Component');
+
+  /**
+   * MenuItem for changing the video source
+   *
+   * @return {SourceMenuItem} Sorted array of SourceMenuItems
+  */
   var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
     _inheritsLoose(SourceMenuItem, _MenuItem);
+    /**
+     * Create SourceMenuItems and sort them
+     *
+     * @param {videojs.Player} player
+     * A videojs player
+     *
+     * @param {{label, index, selected, sortVal, selectable: true, multiSelectable: false}} options
+     * Multiselectable
+     *
+    */
     function SourceMenuItem(player, options) {
       options.selectable = true;
       options.multiSelectable = false;
       return _MenuItem.call(this, player, options) || this;
     }
+
+    /**
+     * Function called whenever a SourceMenuItem is clicked
+    */
     var _proto = SourceMenuItem.prototype;
     _proto.handleClick = function handleClick() {
       var selected = this.options_;
@@ -45,7 +65,11 @@
         // If this is the Auto option, enable all renditions for adaptive selection
         levels[i].enabled = selected.index === levels.length || selected.index === i;
       }
-    };
+    }
+
+    /**
+    * Create SourceMenuItems and sort them
+    */;
     _proto.update = function update() {
       var selectedIndex = this.player().qualityLevels().selectedIndex;
       this.selected(this.options_.index === selectedIndex);
@@ -55,8 +79,22 @@
   Component.registerComponent('SourceMenuItem', SourceMenuItem);
 
   var MenuButton = videojs.getComponent('MenuButton');
+
+  /**
+   * A button that hides/shows sorted SourceMenuItems
+  */
   var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
     _inheritsLoose(SourceMenuButton, _MenuButton);
+    /**
+     * Create SourceMenuItems and sort them
+     *
+     * @param {videojs.Player} player
+     * videojs player
+     *
+     * @param {{default}} options
+     * high | low
+     *
+    */
     function SourceMenuButton(player, options) {
       var _this;
       _this = _MenuButton.call(this, player, options) || this;
@@ -81,18 +119,42 @@
       _this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs.bind(_assertThisInitialized(_this), _this.update));
       return _this;
     }
+
+    /**
+     * Create div with videojs classes
+     *
+     * @return {Element} The sum of the two numbers.
+    */
     var _proto = SourceMenuButton.prototype;
     _proto.createEl = function createEl() {
       return videojs.dom.createEl('div', {
         className: 'vjs-http-source-selector vjs-menu-button vjs-menu-button-popup vjs-control vjs-button'
       });
-    };
+    }
+
+    /**
+     * Create SourceMenuItems and sort them
+     *
+     * @return {SourceMenuItem[]} The sum of the two numbers.
+    */;
     _proto.buildCSSClass = function buildCSSClass() {
       return MenuButton.prototype.buildCSSClass.call(this) + ' vjs-icon-cog';
-    };
+    }
+
+    /**
+     * Update the menu button
+     *
+     * @return {any} _
+    */;
     _proto.update = function update() {
       return MenuButton.prototype.update.call(this);
-    };
+    }
+
+    /**
+     * Create SourceMenuItems and sort them
+     *
+     * @return {SourceMenuItem[]} Sorted array of SourceMenuItems
+    */;
     _proto.createItems = function createItems() {
       var menuItems = [];
       var levels = this.player().qualityLevels();
@@ -161,6 +223,9 @@
   *
   * @param    {Object} [options={}]
   *           A plain object containing options for the plugin.
+  *
+  * @return {boolean}
+  *         Returns false if not use Html5 tech
   */
   var onPlayerReady = function onPlayerReady(player, options) {
     player.addClass('vjs-http-source-selector');

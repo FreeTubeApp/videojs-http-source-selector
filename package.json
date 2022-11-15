@@ -8,12 +8,9 @@
   "homepage": "https://github.com/FreeTubeApp/videojs-http-source-selector",
   "bugs": "https://github.com/FreeTubeApp/videojs-http-source-selector/issues",
   "module": "dist/videojs-http-source-selector.es.js",
-  "generator-videojs-plugin": {
-    "version": "5.2.1"
-  },
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "concurrently \"npm:build:css\" \"npm:build:js\" & npm run add-headers",
+    "build": "concurrently \"npm:build:css\" \"npm:build:js\" \"npm:docs\" & npm run add-headers",
     "build-ci": "concurrently \"npm:build:css\" \"npm:build:js\"",
     "build:css": "node scripts/copy-css.cjs",
     "build:js":"concurrently \"npm:build:js:*\" & npm run build:uglify",
@@ -23,8 +20,7 @@
     "build:test": "rollup -c scripts/test.rollup.config.js",
     "add-headers": "dist-header dist",
     "clean": "rimraf dist test/dist",
-    "docs": "concurrently \"npm:docs:*\"",
-    "docs:api": "jsdoc src -r -c jsdoc.json -d docs/api",
+    "docs": "jsdoc src -r -c jsdoc.json -d docs/api",
     "lint": "eslint ./src",
     "pretest": "concurrently \"npm:lint\" \"npm:build\"",
     "watch": "concurrently \"npm:watch*",
@@ -36,10 +32,12 @@
   },
   "keywords": [
     "videojs",
+    "video.js",
     "videojs-plugin",
     "FreeTube",
     "dash",
-    "quality selector"
+    "quality selector",
+    "addaptive http"
   ],
   "author": "Justin Fujita <Justin@pivotshare.com>",
   "contributors": ["ChunkyProgrammer", "FreeTube Team"],
