@@ -1,7 +1,7 @@
 # videojs-http-source-selector
 VideoJS plugin that leverages videojs-contrib-quality-levels plugin to offer manual user-selectable level selection options for adaptive http streams.
 
-![Alt text](doc/images/example.png "Source selector")
+![Alt text](docs/images/example.png "Source selector")
 
 # Test it with your stream 
 

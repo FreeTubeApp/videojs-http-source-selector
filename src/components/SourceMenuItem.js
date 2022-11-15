@@ -2,7 +2,22 @@ import videojs from 'video.js';
 const MenuItem = videojs.getComponent('MenuItem');
 const Component = videojs.getComponent('Component');
 
+/**
+ * MenuItem for changing the video source
+ *
+ * @return {SourceMenuItem} Sorted array of SourceMenuItems
+*/
 class SourceMenuItem extends MenuItem {
+  /**
+   * Create SourceMenuItems and sort them
+   *
+   * @param {videojs.Player} player
+   * A videojs player
+   *
+   * @param {{selectable: true, multiSelectable: false}} options
+   * Multiselectable
+   *
+  */
   constructor(player, options) {
     options.selectable = true;
     options.multiSelectable = false;
@@ -10,6 +25,9 @@ class SourceMenuItem extends MenuItem {
     super(player, options);
   }
 
+  /**
+   * Function called whenever a SourceMenuItem is clicked
+  */
   handleClick() {
     const selected = this.options_;
 
@@ -23,6 +41,9 @@ class SourceMenuItem extends MenuItem {
     }
   }
 
+  /**
+  * Create SourceMenuItems and sort them
+  */
   update() {
     const selectedIndex = this.player().qualityLevels().selectedIndex;
 
