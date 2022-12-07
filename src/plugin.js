@@ -40,7 +40,6 @@ const onPlayerReady = (player, options) => {
   *
   **/
   player.on(['loadedmetadata'], function(e) {
-    videojs.log('loadmetadata event');
     // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
     if (!player.videojsHTTPSouceSelectorInitialized) {
       player.videojsHTTPSouceSelectorInitialized = true;
@@ -66,7 +65,9 @@ const onPlayerReady = (player, options) => {
   */
 const httpSourceSelector = function(options) {
   this.ready(() => {
-    onPlayerReady(this, videojs.mergeOptions(defaults, options));
+    const merge = videojs?.obj?.merge || videojs.mergeOptions;
+
+    onPlayerReady(this, merge(defaults, options));
     // this.getChild('controlBar').addChild('SourceMenuButton', {});
   });
 
