@@ -10,8 +10,7 @@
   "module": "dist/videojs-http-source-selector.es.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "concurrently \"npm:build:css\" \"npm:build:js\" \"npm:docs\" & npm run add-headers",
-    "build-ci": "concurrently \"npm:build:css\" \"npm:build:js\"",
+    "build": "concurrently \"npm:build:css\" \"npm:build:js\" \"npm:docs\" && npm run add-headers",
     "build:css": "node scripts/copy-css.cjs",
     "build:js":"concurrently \"npm:build:js:*\" & npm run build:uglify",
     "build:js:rollup-modules": "rollup -c scripts/modules.rollup.config.js",
