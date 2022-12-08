@@ -12,7 +12,7 @@
     "prebuild": "npm run clean",
     "build": "concurrently \"npm:build:css\" \"npm:build:js\" \"npm:docs\" && npm run add-headers",
     "build:css": "node scripts/copy-css.cjs",
-    "build:js":"concurrently \"npm:build:js:*\" & npm run build:uglify",
+    "build:js":"concurrently \"npm:build:js:*\" && npm run build:uglify",
     "build:js:rollup-modules": "rollup -c scripts/modules.rollup.config.js",
     "build:js:rollup-umd": "rollup -c scripts/umd.rollup.config.js",
     "build:uglify": "uglifyjs dist/videojs-http-source-selector.js --comments --mangle --compress  -o dist/videojs-http-source-selector.min.js",
