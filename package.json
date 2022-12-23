@@ -51,7 +51,7 @@
     "video.js": "^6 || ^7 || ^8"
   },
   "dependencies": {
-    "videojs-contrib-quality-levels": "^2.2.1"
+    "videojs-contrib-quality-levels": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
