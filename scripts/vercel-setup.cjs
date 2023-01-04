@@ -1,4 +1,4 @@
-const { copyFileSync, existsSync, mkdirSync } = require('fs');
+const { copyFileSync, existsSync, mkdirSync } = require('node:fs');
 
 /**
  * Copy built files to public folder.

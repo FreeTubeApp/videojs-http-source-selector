@@ -14,19 +14,17 @@
   /**
    * MenuItem for changing the video source
    *
-   * @return {SourceMenuItem} Sorted array of SourceMenuItems
-  */
+   * @returns {SourceMenuItem} Sorted array of SourceMenuItems
+   */
   class SourceMenuItem extends MenuItem {
     /**
      * Create SourceMenuItems and sort them
      *
      * @param {videojs.Player} player
      * A videojs player
-     *
-     * @param {{label, index, selected, sortVal, selectable: true, multiSelectable: false}} options
+     * @param {{label, index, selected, sortValue, selectable: true, multiSelectable: false}} options
      * Multiselectable
-     *
-    */
+     */
     constructor(player, options) {
       options.selectable = true;
       options.multiSelectable = false;
@@ -35,19 +33,19 @@
 
     /**
      * Function called whenever a SourceMenuItem is clicked
-    */
+     */
     handleClick() {
       const selected = this.options_;
       super.handleClick();
-      const levels = Array.from(this.player().qualityLevels());
-      levels.forEach((level, index) => {
+      const levels = [...this.player().qualityLevels()];
+      for (const [index, level] of levels.entries()) {
         level.enabled = selected.index === levels.length || selected.index === index;
-      });
+      }
     }
 
     /**
-    * Create SourceMenuItems and sort them
-    */
+     * Create SourceMenuItems and sort them
+     */
     update() {
       const selectedIndex = this.player().qualityLevels().selectedIndex;
       this.selected(this.options_.index === selectedIndex);
@@ -59,18 +57,16 @@
 
   /**
    * A button that hides/shows sorted SourceMenuItems
-  */
+   */
   class SourceMenuButton extends MenuButton {
     /**
      * Create SourceMenuItems and sort them
      *
      * @param {videojs.Player} player
      * videojs player
-     *
      * @param {{default}} options
      * high | low
-     *
-    */
+     */
     constructor(player, options) {
       super(player, options);
       Reflect.apply(MenuButton, this, arguments);
@@ -80,8 +76,8 @@
       // This determines a bias to set initial resolution selection.
       if (options && options.default) {
         if (options.default === 'low') {
-          for (let index = 0; i < qualityLevels.length; index++) {
-            qualityLevels[index].enabled = index === 0;
+          for (const [index, qualityLevel] of qualityLevels.entries()) {
+            qualityLevel.enabled = index === 0;
           }
         } else if (options.default === 'high') {
           for (let index = 0; index < qualityLevels.length; index++) {
@@ -97,8 +93,8 @@
     /**
      * Create div with videojs classes
      *
-     * @return {Element} The sum of the two numbers.
-    */
+     * @returns {videojs.MenuButton} The sum of the two numbers.
+     */
     createEl() {
       return videojs.dom.createEl('div', {
         className: 'vjs-http-source-selector vjs-menu-button vjs-menu-button-popup vjs-control vjs-button'
@@ -108,8 +104,8 @@
     /**
      * Create SourceMenuItems and sort them
      *
-     * @return {SourceMenuItem[]} The sum of the two numbers.
-    */
+     * @returns {SourceMenuItem[]} The sum of the two numbers.
+     */
     buildCSSClass() {
       return MenuButton.prototype.buildCSSClass.call(this);
     }
@@ -117,8 +113,8 @@
     /**
      * Update the menu button
      *
-     * @return {any} _
-    */
+     * @returns {videojs.MenuButton} The updated menu button
+     */
     update() {
       return MenuButton.prototype.update.call(this);
     }
@@ -126,8 +122,8 @@
     /**
      * Create SourceMenuItems and sort them
      *
-     * @return {SourceMenuItem[]} Sorted array of SourceMenuItems
-    */
+     * @returns {SourceMenuItem[]} Sorted array of SourceMenuItems
+     */
     createItems() {
       const menuItems = [];
       const levels = this.player().qualityLevels();
@@ -184,34 +180,35 @@
   // const dom = videojs.dom || videojs;
 
   /**
-  * Function to invoke when the player is ready.
-  *
-  * This is a great place for your plugin to initialize itself. When this
-  * function is called, the player will have its DOM and child components
-  * in place.
-  *
-  * @function onPlayerReady
-  * @param    {Player} player
-  *           A Video.js player object.
-  *
-  * @param    {Object} [options={}]
-  *           A plain object containing options for the plugin.
-  *
-  * @return {boolean}
-  *         Returns false if not use Html5 tech
-  */
+   * Function to invoke when the player is ready.
+   *
+   * This is a great place for your plugin to initialize itself. When this
+   * function is called, the player will have its DOM and child components
+   * in place.
+   *
+   * @function onPlayerReady
+   * @param    {videojs.Player} player
+   *           A Video.js player object.
+   * @param    {object} [options={}]
+   *           A plain object containing options for the plugin.
+   * @returns {boolean}
+   *         Returns false if not using Html5 tech
+   */
+  // eslint-disable-next-line no-unused-vars
   const onPlayerReady = (player, options) => {
     player.addClass('vjs-http-source-selector');
     // This plugin only supports level selection for HLS playback
     if (player.techName_ !== 'Html5') {
+      console.error(player.techName_);
       return false;
     }
 
     /**
-    *
-    * We have to wait for the manifest to load before we can scan renditions for resolutions/bitrates to populate selections
-    *
-    **/
+     *
+     * We have to wait for the manifest to load before we can scan renditions for resolutions/bitrates to populate selections
+     *
+     */
+    // eslint-disable-next-line no-unused-vars
     player.on(['loadedmetadata'], function (event) {
       // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
       if (!player.videojsHTTPSouceSelectorInitialized) {
@@ -225,20 +222,21 @@
         }
       }
     });
+    return true;
   };
 
   /**
-    * A video.js plugin.
-    *
-    * In the plugin function, the value of `this` is a video.js `Player`
-    * instance. You cannot rely on the player being in a "ready" state here,
-    * depending on how the plugin is invoked. This may or may not be important
-    * to you; if not, remove the wait for "ready"!
-    *
-    * @function httpSourceSelector
-    * @param    {Object} [options={}]
-    *           An object of options left to the plugin author to define.
-    */
+   * A video.js plugin.
+   *
+   * In the plugin function, the value of `this` is a video.js `Player`
+   * instance. You cannot rely on the player being in a "ready" state here,
+   * depending on how the plugin is invoked. This may or may not be important
+   * to you; if not, remove the wait for "ready"!
+   *
+   * @function httpSourceSelector
+   * @param    {object} [options={}]
+   *           An object of options left to the plugin author to define.
+   */
   const httpSourceSelector = function (options) {
     this.ready(() => {
       const merge = videojs?.obj?.merge || videojs.mergeOptions;

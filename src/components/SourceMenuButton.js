@@ -5,18 +5,16 @@ const MenuButton = videojs.getComponent('MenuButton');
 
 /**
  * A button that hides/shows sorted SourceMenuItems
-*/
+ */
 class SourceMenuButton extends MenuButton {
   /**
    * Create SourceMenuItems and sort them
    *
    * @param {videojs.Player} player
    * videojs player
-   *
    * @param {{default}} options
    * high | low
-   *
-  */
+   */
   constructor(player, options) {
     super(player, options);
 
@@ -28,8 +26,8 @@ class SourceMenuButton extends MenuButton {
     // This determines a bias to set initial resolution selection.
     if (options && options.default) {
       if (options.default === 'low') {
-        for (let index = 0; i < qualityLevels.length; index++) {
-          qualityLevels[index].enabled = (index === 0);
+        for (const [index, qualityLevel] of qualityLevels.entries()) {
+          qualityLevel.enabled = (index === 0);
         }
       } else if (options.default === 'high') {
         for (let index = 0; index < qualityLevels.length; index++) {
@@ -45,8 +43,8 @@ class SourceMenuButton extends MenuButton {
   /**
    * Create div with videojs classes
    *
-   * @return {Element} The sum of the two numbers.
-  */
+   * @returns {videojs.MenuButton} The sum of the two numbers.
+   */
   createEl() {
     return videojs.dom.createEl('div', {
       className: 'vjs-http-source-selector vjs-menu-button vjs-menu-button-popup vjs-control vjs-button'
@@ -56,8 +54,8 @@ class SourceMenuButton extends MenuButton {
   /**
    * Create SourceMenuItems and sort them
    *
-   * @return {SourceMenuItem[]} The sum of the two numbers.
-  */
+   * @returns {SourceMenuItem[]} The sum of the two numbers.
+   */
   buildCSSClass() {
     return MenuButton.prototype.buildCSSClass.call(this);
   }
@@ -65,8 +63,8 @@ class SourceMenuButton extends MenuButton {
   /**
    * Update the menu button
    *
-   * @return {any} _
-  */
+   * @returns {videojs.MenuButton} The updated menu button
+   */
   update() {
     return MenuButton.prototype.update.call(this);
   }
@@ -74,8 +72,8 @@ class SourceMenuButton extends MenuButton {
   /**
    * Create SourceMenuItems and sort them
    *
-   * @return {SourceMenuItem[]} Sorted array of SourceMenuItems
-  */
+   * @returns {SourceMenuItem[]} Sorted array of SourceMenuItems
+   */
   createItems() {
     const menuItems = [];
     const levels = this.player().qualityLevels();
