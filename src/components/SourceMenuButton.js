@@ -1,5 +1,5 @@
 import videojs from 'video.js';
-import SourceMenuItem from './SourceMenuItem';
+import SourceMenuItem from './SourceMenuItem.js';
 
 const MenuButton = videojs.getComponent('MenuButton');
 
@@ -20,7 +20,7 @@ class SourceMenuButton extends MenuButton {
   constructor(player, options) {
     super(player, options);
 
-    MenuButton.apply(this, arguments);
+    Reflect.apply(MenuButton, this, arguments);
 
     const qualityLevels = this.player().qualityLevels();
 
@@ -28,12 +28,12 @@ class SourceMenuButton extends MenuButton {
     // This determines a bias to set initial resolution selection.
     if (options && options.default) {
       if (options.default === 'low') {
-        for (let i = 0; i < qualityLevels.length; i++) {
-          qualityLevels[i].enabled = (i === 0);
+        for (let index = 0; i < qualityLevels.length; index++) {
+          qualityLevels[index].enabled = (index === 0);
         }
       } else if (options.default === 'high') {
-        for (let i = 0; i < qualityLevels.length; i++) {
-          qualityLevels[i].enabled = (i === (qualityLevels.length - 1));
+        for (let index = 0; index < qualityLevels.length; index++) {
+          qualityLevels[index].enabled = (index === (qualityLevels.length - 1));
         }
       }
     }
@@ -86,33 +86,34 @@ class SourceMenuButton extends MenuButton {
 
       // Display height if height metadata is provided with the stream, else use bitrate
       let label = `${index}`;
-      let sortVal = index;
+      let sortValue = index;
+      const level = levels[index];
 
-      if (levels[index].height) {
-        label = `${levels[index].height}p`;
-        sortVal = parseInt(levels[index].height, 10);
-      } else if (levels[index].bitrate) {
-        label = `${Math.floor(levels[index].bitrate / 1e3)} kbps`;
-        sortVal = parseInt(levels[index].bitrate, 10);
+      if (level.height) {
+        label = `${level.height}p`;
+        sortValue = Number.parseInt(level.height, 10);
+      } else if (level.bitrate) {
+        label = `${Math.floor(level.bitrate / 1e3)} kbps`;
+        sortValue = Number.parseInt(level.bitrate, 10);
       }
 
       // Skip duplicate labels
-      if (labels.indexOf(label) !== -1) {
+      if (labels.includes(label)) {
         continue;
       }
       labels.push(label);
 
-      menuItems.push(new SourceMenuItem(this.player_, { label, index, selected, sortVal }));
+      menuItems.push(new SourceMenuItem(this.player_, { label, index, selected, sortValue }));
     }
 
     // If there are multiple quality levels, offer an 'auto' option
     if (levels.length > 1) {
-      menuItems.push(new SourceMenuItem(this.player_, { label: 'Auto', index: levels.length, selected: false, sortVal: 99999 }));
+      menuItems.push(new SourceMenuItem(this.player_, { label: 'Auto', index: levels.length, selected: false, sortValue: 99_999 }));
     }
 
     // Sort menu items by their label name with Auto always first
     menuItems.sort(function(a, b) {
-      return b.options_.sortVal - a.options_.sortVal;
+      return b.options_.sortValue - a.options_.sortValue;
     });
 
     return menuItems;

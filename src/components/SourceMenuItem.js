@@ -35,9 +35,8 @@ class SourceMenuItem extends MenuItem {
 
     const levels = this.player().qualityLevels();
 
-    for (let i = 0; i < levels.length; i++) {
-      // If this is the Auto option, enable all renditions for adaptive selection
-      levels[i].enabled = selected.index === levels.length || selected.index === i;
+    for (const [level, index] of levels.entries().entries()) {
+      level.enabled = selected.index === levels.length || selected.index === index;
     }
   }
 

@@ -22,6 +22,37 @@ function _assertThisInitialized(self) {
   }
   return self;
 }
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  return arr2;
+}
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+  if (it) return (it = it.call(o)).next.bind(it);
+  if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+    if (it) o = it;
+    var i = 0;
+    return function () {
+      if (i >= o.length) return {
+        done: true
+      };
+      return {
+        done: false,
+        value: o[i++]
+      };
+    };
+  }
+  throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
 
 var MenuItem = videojs.getComponent('MenuItem');
 var Component = videojs.getComponent('Component');
@@ -57,9 +88,11 @@ var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
     var selected = this.options_;
     _MenuItem.prototype.handleClick.call(this);
     var levels = this.player().qualityLevels();
-    for (var i = 0; i < levels.length; i++) {
-      // If this is the Auto option, enable all renditions for adaptive selection
-      levels[i].enabled = selected.index === levels.length || selected.index === i;
+    for (var _iterator = _createForOfIteratorHelperLoose(levels.entries().entries()), _step; !(_step = _iterator()).done;) {
+      var _step$value = _step.value,
+        level = _step$value[0],
+        index = _step$value[1];
+      level.enabled = selected.index === levels.length || selected.index === index;
     }
   }
 
@@ -94,19 +127,19 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
   function SourceMenuButton(player, options) {
     var _this;
     _this = _MenuButton.call(this, player, options) || this;
-    MenuButton.apply(_assertThisInitialized(_this), arguments);
+    Reflect.apply(MenuButton, _assertThisInitialized(_this), arguments);
     var qualityLevels = _this.player().qualityLevels();
 
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
     if (options && options["default"]) {
       if (options["default"] === 'low') {
-        for (var i = 0; i < qualityLevels.length; i++) {
-          qualityLevels[i].enabled = i === 0;
+        for (var index = 0; i < qualityLevels.length; index++) {
+          qualityLevels[index].enabled = index === 0;
         }
       } else if (options["default"] === 'high') {
-        for (var _i = 0; _i < qualityLevels.length; _i++) {
-          qualityLevels[_i].enabled = _i === qualityLevels.length - 1;
+        for (var _index = 0; _index < qualityLevels.length; _index++) {
+          qualityLevels[_index].enabled = _index === qualityLevels.length - 1;
         }
       }
     }
@@ -160,17 +193,18 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
 
       // Display height if height metadata is provided with the stream, else use bitrate
       var label = "" + index;
-      var sortVal = index;
-      if (levels[index].height) {
-        label = levels[index].height + "p";
-        sortVal = parseInt(levels[index].height, 10);
-      } else if (levels[index].bitrate) {
-        label = Math.floor(levels[index].bitrate / 1e3) + " kbps";
-        sortVal = parseInt(levels[index].bitrate, 10);
+      var sortValue = index;
+      var level = levels[index];
+      if (level.height) {
+        label = level.height + "p";
+        sortValue = Number.parseInt(level.height, 10);
+      } else if (level.bitrate) {
+        label = Math.floor(level.bitrate / 1e3) + " kbps";
+        sortValue = Number.parseInt(level.bitrate, 10);
       }
 
       // Skip duplicate labels
-      if (labels.indexOf(label) !== -1) {
+      if (labels.includes(label)) {
         continue;
       }
       labels.push(label);
@@ -178,7 +212,7 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
         label: label,
         index: index,
         selected: selected,
-        sortVal: sortVal
+        sortValue: sortValue
       }));
     }
 
@@ -188,13 +222,13 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
         label: 'Auto',
         index: levels.length,
         selected: false,
-        sortVal: 99999
+        sortValue: 99999
       }));
     }
 
     // Sort menu items by their label name with Auto always first
     menuItems.sort(function (a, b) {
-      return b.options_.sortVal - a.options_.sortVal;
+      return b.options_.sortValue - a.options_.sortValue;
     });
     return menuItems;
   };
@@ -235,7 +269,7 @@ var onPlayerReady = function onPlayerReady(player, options) {
   * We have to wait for the manifest to load before we can scan renditions for resolutions/bitrates to populate selections
   *
   **/
-  player.on(['loadedmetadata'], function (e) {
+  player.on(['loadedmetadata'], function (event) {
     // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
     if (!player.videojsHTTPSouceSelectorInitialized) {
       player.videojsHTTPSouceSelectorInitialized = true;
@@ -244,7 +278,7 @@ var onPlayerReady = function onPlayerReady(player, options) {
       if (fullscreenToggle) {
         controlBar.el().insertBefore(controlBar.addChild('SourceMenuButton').el(), fullscreenToggle.el());
       } else {
-        controlBar.el().appendChild(controlBar.addChild('SourceMenuButton').el());
+        controlBar.el().append(controlBar.addChild('SourceMenuButton').el());
       }
     }
   });

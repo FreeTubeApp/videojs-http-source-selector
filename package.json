@@ -10,36 +10,37 @@
   "module": "dist/videojs-http-source-selector.es.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "concurrently \"npm:build:css\" \"npm:build:js\" \"npm:docs\" && npm run add-headers",
-    "build:css": "node scripts/copy-css.cjs",
-    "build:js":"concurrently \"npm:build:js:*\" && npm run build:uglify",
+    "build": "concurrently \"npm:build:cs*\" \"npm:build:js\" \"npm:docs\" && npm run add-headers",
+    "build:css": "node-sass src/plugin.scss dist/videojs-http-source-selector.css",
+    "build:css:min": "node-sass src/plugin.scss dist/videojs-http-source-selector.min.css --output-style=compressed --linefeed=lf",
+    "build:js": "concurrently \"npm:build:js:*\" && npm run build:uglify",
     "build:js:rollup-modules": "rollup -c scripts/modules.rollup.config.js",
     "build:js:rollup-umd": "rollup -c scripts/umd.rollup.config.js",
     "build:uglify": "uglifyjs dist/videojs-http-source-selector.js --comments --mangle --compress  -o dist/videojs-http-source-selector.min.js",
-    "build:test": "rollup -c scripts/test.rollup.config.js",
     "add-headers": "dist-header dist",
     "clean": "rimraf dist test/dist",
     "docs": "jsdoc src -r -c jsdoc.json -d docs/api",
     "lint": "eslint ./src",
     "pretest": "concurrently \"npm:lint\" \"npm:build\"",
-    "watch": "concurrently \"npm:watch*",
-    "watch:css": "concurrently \"npm:build:css\" \"npm:watch:css:copy\"",
-    "watch:css:copy": "node scripts/copy-css.cjs --watch",
-    "watch:js-modules": "rollup -c scripts/modules.rollup.config.js -w",
-    "watch:js-umd": "rollup -c scripts/umd.rollup.config.js -w",
+    "vercel-setup": "npm run build && node scripts/vercel-setup.cjs",
     "prepublish": "not-in-install && npm run build || in-install"
   },
   "keywords": [
     "videojs",
     "video.js",
     "videojs-plugin",
+    "videojs plugin",
+    "plugin",
     "FreeTube",
     "dash",
     "quality selector",
-    "addaptive http"
+    "adaptive http"
   ],
   "author": "Justin Fujita <Justin@pivotshare.com>",
-  "contributors": ["ChunkyProgrammer", "FreeTube Team"],
+  "contributors": [
+    "ChunkyProgrammer",
+    "FreeTube Team"
+  ],
   "license": "MIT",
   "files": [
     "README.md",
@@ -48,9 +49,7 @@
     "src/"
   ],
   "peerDependencies": {
-    "video.js": "^6 || ^7 || ^8"
-  },
-  "dependencies": {
+    "video.js": "^6 || ^7 || ^8",
     "videojs-contrib-quality-levels": "^3.0.0"
   },
   "devDependencies": {
@@ -66,12 +65,16 @@
     "eslint": "^8.29.0",
     "eslint-config-videojs": "^6.0.0",
     "eslint-plugin-jsdoc": "^39.6.4",
+    "eslint-plugin-sonarjs": "^0.17.0",
+    "eslint-plugin-unicorn": "^45.0.2",
     "global": "^4.4.0",
     "in-publish": "^2.0.1",
     "jsdoc": "^4.0.0",
+    "node-sass": "^8.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^3.6.0",
     "uglify-js": "^3.17.4",
-    "video.js": "^6 || ^7 || ^8"
+    "video.js": "^7",
+    "videojs-contrib-quality-levels": "^3.0.0"
   }
 }

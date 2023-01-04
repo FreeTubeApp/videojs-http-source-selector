@@ -1,8 +1,8 @@
 import videojs from 'video.js';
 import {version as VERSION} from '../package.json';
 
-import SourceMenuButton from './components/SourceMenuButton';
-import SourceMenuItem from './components/SourceMenuItem';
+import SourceMenuButton from './components/SourceMenuButton.js';
+import SourceMenuItem from './components/SourceMenuItem.js';
 
 // Default options for the plugin.
 const defaults = {};
@@ -39,7 +39,7 @@ const onPlayerReady = (player, options) => {
   * We have to wait for the manifest to load before we can scan renditions for resolutions/bitrates to populate selections
   *
   **/
-  player.on(['loadedmetadata'], function(e) {
+  player.on(['loadedmetadata'], function(event) {
     // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
     if (!player.videojsHTTPSouceSelectorInitialized) {
       player.videojsHTTPSouceSelectorInitialized = true;
@@ -49,7 +49,7 @@ const onPlayerReady = (player, options) => {
       if (fullscreenToggle) {
         controlBar.el().insertBefore(controlBar.addChild('SourceMenuButton').el(), fullscreenToggle.el());
       } else {
-        controlBar.el().appendChild(controlBar.addChild('SourceMenuButton').el());
+        controlBar.el().append(controlBar.addChild('SourceMenuButton').el());
       }
     }
   });
