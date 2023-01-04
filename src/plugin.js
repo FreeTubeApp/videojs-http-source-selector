@@ -18,7 +18,7 @@ const registerPlugin = videojs.registerPlugin;
 * in place.
 *
 * @function onPlayerReady
-* @param    {Player} player
+* @param    {videojs.Player} player
 *           A Video.js player object.
 *
 * @param    {Object} [options={}]
@@ -31,6 +31,7 @@ const onPlayerReady = (player, options) => {
   player.addClass('vjs-http-source-selector');
   // This plugin only supports level selection for HLS playback
   if (player.techName_ !== 'Html5') {
+    console.error(player.techName_)
     return false;
   }
 

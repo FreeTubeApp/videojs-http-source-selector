@@ -12,13 +12,13 @@ export default {
   name: 'videojsHttpSourceSelector',
   input: 'src/plugin.js',
   output: [{
-    file: 'dist/videojs-http-source-selector.cjs.js',
+    file: 'dist/legacy/videojs-http-source-selector.cjs.js',
     format: 'cjs',
     globals: {
       'video.js': 'videojs'
     }
   }, {
-    file: 'dist/videojs-http-source-selector.es.js',
+    file: 'dist/legacy/videojs-http-source-selector.es.js',
     format: 'es',
     globals: {
       'video.js': 'videojs'
@@ -39,10 +39,12 @@ export default {
       exclude: 'node_modules/**',
       presets: [
         ['@babel/preset-env', {
-          targets: {
-            chrome: 108
-          }
+          loose: true,
+          modules: false
         }]
+      ],
+      plugins: [
+        '@babel/transform-object-assign'
       ]
     })
   ]

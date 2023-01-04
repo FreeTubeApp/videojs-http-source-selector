@@ -14,7 +14,7 @@ export default {
   input: 'src/plugin.js',
   output: {
     name: 'videojs-http-source-selector',
-    file: 'dist/videojs-http-source-selector.js',
+    file: 'dist/legacy/videojs-http-source-selector.js',
     format: 'umd',
     globals: {
       'video.js': 'videojs',
@@ -46,10 +46,12 @@ export default {
       exclude: 'node_modules/**',
       presets: [
         ['@babel/preset-env', {
-          targets: {
-            chrome: 108
-          }
+          loose: true,
+          modules: false
         }]
+      ],
+      plugins: [
+        '@babel/transform-object-assign'
       ]
     })
   ]

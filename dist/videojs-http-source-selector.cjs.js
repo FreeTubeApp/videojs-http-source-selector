@@ -6,66 +6,15 @@ var videojs = require('video.js');
 
 var version = "1.1.7";
 
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
-}
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return self;
-}
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-function _createForOfIteratorHelperLoose(o, allowArrayLike) {
-  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-  if (it) return (it = it.call(o)).next.bind(it);
-  if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-    if (it) o = it;
-    var i = 0;
-    return function () {
-      if (i >= o.length) return {
-        done: true
-      };
-      return {
-        done: false,
-        value: o[i++]
-      };
-    };
-  }
-  throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-var MenuItem = videojs.getComponent('MenuItem');
-var Component = videojs.getComponent('Component');
+const MenuItem = videojs.getComponent('MenuItem');
+const Component = videojs.getComponent('Component');
 
 /**
  * MenuItem for changing the video source
  *
  * @return {SourceMenuItem} Sorted array of SourceMenuItems
 */
-var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
-  _inheritsLoose(SourceMenuItem, _MenuItem);
+class SourceMenuItem extends MenuItem {
   /**
    * Create SourceMenuItems and sort them
    *
@@ -76,46 +25,40 @@ var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
    * Multiselectable
    *
   */
-  function SourceMenuItem(player, options) {
+  constructor(player, options) {
     options.selectable = true;
     options.multiSelectable = false;
-    return _MenuItem.call(this, player, options) || this;
+    super(player, options);
   }
 
   /**
    * Function called whenever a SourceMenuItem is clicked
   */
-  var _proto = SourceMenuItem.prototype;
-  _proto.handleClick = function handleClick() {
-    var selected = this.options_;
-    _MenuItem.prototype.handleClick.call(this);
-    var levels = this.player().qualityLevels();
-    for (var _iterator = _createForOfIteratorHelperLoose(levels.entries().entries()), _step; !(_step = _iterator()).done;) {
-      var _step$value = _step.value,
-        level = _step$value[0],
-        index = _step$value[1];
+  handleClick() {
+    const selected = this.options_;
+    super.handleClick();
+    const levels = Array.from(this.player().qualityLevels());
+    levels.forEach((level, index) => {
       level.enabled = selected.index === levels.length || selected.index === index;
-    }
+    });
   }
 
   /**
   * Create SourceMenuItems and sort them
-  */;
-  _proto.update = function update() {
-    var selectedIndex = this.player().qualityLevels().selectedIndex;
+  */
+  update() {
+    const selectedIndex = this.player().qualityLevels().selectedIndex;
     this.selected(this.options_.index === selectedIndex);
-  };
-  return SourceMenuItem;
-}(MenuItem);
+  }
+}
 Component.registerComponent('SourceMenuItem', SourceMenuItem);
 
-var MenuButton = videojs.getComponent('MenuButton');
+const MenuButton = videojs.getComponent('MenuButton');
 
 /**
  * A button that hides/shows sorted SourceMenuItems
 */
-var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
-  _inheritsLoose(SourceMenuButton, _MenuButton);
+class SourceMenuButton extends MenuButton {
   /**
    * Create SourceMenuItems and sort them
    *
@@ -126,29 +69,27 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
    * high | low
    *
   */
-  function SourceMenuButton(player, options) {
-    var _this;
-    _this = _MenuButton.call(this, player, options) || this;
-    Reflect.apply(MenuButton, _assertThisInitialized(_this), arguments);
-    var qualityLevels = _this.player().qualityLevels();
+  constructor(player, options) {
+    super(player, options);
+    Reflect.apply(MenuButton, this, arguments);
+    const qualityLevels = this.player().qualityLevels();
 
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
-    if (options && options["default"]) {
-      if (options["default"] === 'low') {
-        for (var index = 0; i < qualityLevels.length; index++) {
+    if (options && options.default) {
+      if (options.default === 'low') {
+        for (let index = 0; i < qualityLevels.length; index++) {
           qualityLevels[index].enabled = index === 0;
         }
-      } else if (options["default"] === 'high') {
-        for (var _index = 0; _index < qualityLevels.length; _index++) {
-          qualityLevels[_index].enabled = _index === qualityLevels.length - 1;
+      } else if (options.default === 'high') {
+        for (let index = 0; index < qualityLevels.length; index++) {
+          qualityLevels[index].enabled = index === qualityLevels.length - 1;
         }
       }
     }
 
     // Bind update to qualityLevels changes
-    _this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs.bind(_assertThisInitialized(_this), _this.update));
-    return _this;
+    this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs.bind(this, this.update));
   }
 
   /**
@@ -156,8 +97,7 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
    *
    * @return {Element} The sum of the two numbers.
   */
-  var _proto = SourceMenuButton.prototype;
-  _proto.createEl = function createEl() {
+  createEl() {
     return videojs.dom.createEl('div', {
       className: 'vjs-http-source-selector vjs-menu-button vjs-menu-button-popup vjs-control vjs-button'
     });
@@ -167,8 +107,8 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
    * Create SourceMenuItems and sort them
    *
    * @return {SourceMenuItem[]} The sum of the two numbers.
-  */;
-  _proto.buildCSSClass = function buildCSSClass() {
+  */
+  buildCSSClass() {
     return MenuButton.prototype.buildCSSClass.call(this);
   }
 
@@ -176,8 +116,8 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
    * Update the menu button
    *
    * @return {any} _
-  */;
-  _proto.update = function update() {
+  */
+  update() {
     return MenuButton.prototype.update.call(this);
   }
 
@@ -185,23 +125,23 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
    * Create SourceMenuItems and sort them
    *
    * @return {SourceMenuItem[]} Sorted array of SourceMenuItems
-  */;
-  _proto.createItems = function createItems() {
-    var menuItems = [];
-    var levels = this.player().qualityLevels();
-    var labels = [];
-    for (var index = levels.length - 1; index >= 0; index--) {
-      var selected = index === levels.selectedIndex;
+  */
+  createItems() {
+    const menuItems = [];
+    const levels = this.player().qualityLevels();
+    const labels = [];
+    for (let index = levels.length - 1; index >= 0; index--) {
+      const selected = index === levels.selectedIndex;
 
       // Display height if height metadata is provided with the stream, else use bitrate
-      var label = "" + index;
-      var sortValue = index;
-      var level = levels[index];
+      let label = `${index}`;
+      let sortValue = index;
+      const level = levels[index];
       if (level.height) {
-        label = level.height + "p";
+        label = `${level.height}p`;
         sortValue = Number.parseInt(level.height, 10);
       } else if (level.bitrate) {
-        label = Math.floor(level.bitrate / 1e3) + " kbps";
+        label = `${Math.floor(level.bitrate / 1e3)} kbps`;
         sortValue = Number.parseInt(level.bitrate, 10);
       }
 
@@ -211,10 +151,10 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
       }
       labels.push(label);
       menuItems.push(new SourceMenuItem(this.player_, {
-        label: label,
-        index: index,
-        selected: selected,
-        sortValue: sortValue
+        label,
+        index,
+        selected,
+        sortValue
       }));
     }
 
@@ -224,7 +164,7 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
         label: 'Auto',
         index: levels.length,
         selected: false,
-        sortValue: 99999
+        sortValue: 99_999
       }));
     }
 
@@ -233,13 +173,12 @@ var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
       return b.options_.sortValue - a.options_.sortValue;
     });
     return menuItems;
-  };
-  return SourceMenuButton;
-}(MenuButton);
+  }
+}
 
 // Default options for the plugin.
-var defaults = {};
-var registerPlugin = videojs.registerPlugin;
+const defaults = {};
+const registerPlugin = videojs.registerPlugin;
 // const dom = videojs.dom || videojs;
 
 /**
@@ -259,7 +198,7 @@ var registerPlugin = videojs.registerPlugin;
 * @return {boolean}
 *         Returns false if not use Html5 tech
 */
-var onPlayerReady = function onPlayerReady(player, options) {
+const onPlayerReady = (player, options) => {
   player.addClass('vjs-http-source-selector');
   // This plugin only supports level selection for HLS playback
   if (player.techName_ !== 'Html5') {
@@ -275,8 +214,8 @@ var onPlayerReady = function onPlayerReady(player, options) {
     // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
     if (!player.videojsHTTPSouceSelectorInitialized) {
       player.videojsHTTPSouceSelectorInitialized = true;
-      var controlBar = player.controlBar;
-      var fullscreenToggle = controlBar.getChild('fullscreenToggle');
+      const controlBar = player.controlBar;
+      const fullscreenToggle = controlBar.getChild('fullscreenToggle');
       if (fullscreenToggle) {
         controlBar.el().insertBefore(controlBar.addChild('SourceMenuButton').el(), fullscreenToggle.el());
       } else {
@@ -298,12 +237,10 @@ var onPlayerReady = function onPlayerReady(player, options) {
   * @param    {Object} [options={}]
   *           An object of options left to the plugin author to define.
   */
-var httpSourceSelector = function httpSourceSelector(options) {
-  var _this = this;
-  this.ready(function () {
-    var _videojs$obj;
-    var merge = (videojs == null ? void 0 : (_videojs$obj = videojs.obj) == null ? void 0 : _videojs$obj.merge) || videojs.mergeOptions;
-    onPlayerReady(_this, merge(defaults, options));
+const httpSourceSelector = function (options) {
+  this.ready(() => {
+    const merge = videojs?.obj?.merge || videojs.mergeOptions;
+    onPlayerReady(this, merge(defaults, options));
   });
   videojs.registerComponent('SourceMenuButton', SourceMenuButton);
   videojs.registerComponent('SourceMenuItem', SourceMenuItem);

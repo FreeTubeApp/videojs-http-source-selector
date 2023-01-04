@@ -1,18 +1,36 @@
-//! videojs-http-source-selector v1.1.7 ~~ https://github.com/FreeTubeApp/videojs-http-source-selector ~~ MIT License
-
 import videojs from 'video.js';
 
 var version = "1.1.7";
 
-const MenuItem = videojs.getComponent('MenuItem');
-const Component = videojs.getComponent('Component');
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return self;
+}
+
+var MenuItem = videojs.getComponent('MenuItem');
+var Component = videojs.getComponent('Component');
 
 /**
  * MenuItem for changing the video source
  *
  * @return {SourceMenuItem} Sorted array of SourceMenuItems
 */
-class SourceMenuItem extends MenuItem {
+var SourceMenuItem = /*#__PURE__*/function (_MenuItem) {
+  _inheritsLoose(SourceMenuItem, _MenuItem);
   /**
    * Create SourceMenuItems and sort them
    *
@@ -23,40 +41,43 @@ class SourceMenuItem extends MenuItem {
    * Multiselectable
    *
   */
-  constructor(player, options) {
+  function SourceMenuItem(player, options) {
     options.selectable = true;
     options.multiSelectable = false;
-    super(player, options);
+    return _MenuItem.call(this, player, options) || this;
   }
 
   /**
    * Function called whenever a SourceMenuItem is clicked
   */
-  handleClick() {
-    const selected = this.options_;
-    super.handleClick();
-    const levels = Array.from(this.player().qualityLevels());
-    levels.forEach((level, index) => {
+  var _proto = SourceMenuItem.prototype;
+  _proto.handleClick = function handleClick() {
+    var selected = this.options_;
+    _MenuItem.prototype.handleClick.call(this);
+    var levels = Array.from(this.player().qualityLevels());
+    levels.forEach(function (level, index) {
       level.enabled = selected.index === levels.length || selected.index === index;
     });
   }
 
   /**
   * Create SourceMenuItems and sort them
-  */
-  update() {
-    const selectedIndex = this.player().qualityLevels().selectedIndex;
+  */;
+  _proto.update = function update() {
+    var selectedIndex = this.player().qualityLevels().selectedIndex;
     this.selected(this.options_.index === selectedIndex);
-  }
-}
+  };
+  return SourceMenuItem;
+}(MenuItem);
 Component.registerComponent('SourceMenuItem', SourceMenuItem);
 
-const MenuButton = videojs.getComponent('MenuButton');
+var MenuButton = videojs.getComponent('MenuButton');
 
 /**
  * A button that hides/shows sorted SourceMenuItems
 */
-class SourceMenuButton extends MenuButton {
+var SourceMenuButton = /*#__PURE__*/function (_MenuButton) {
+  _inheritsLoose(SourceMenuButton, _MenuButton);
   /**
    * Create SourceMenuItems and sort them
    *
@@ -67,27 +88,29 @@ class SourceMenuButton extends MenuButton {
    * high | low
    *
   */
-  constructor(player, options) {
-    super(player, options);
-    Reflect.apply(MenuButton, this, arguments);
-    const qualityLevels = this.player().qualityLevels();
+  function SourceMenuButton(player, options) {
+    var _this;
+    _this = _MenuButton.call(this, player, options) || this;
+    Reflect.apply(MenuButton, _assertThisInitialized(_this), arguments);
+    var qualityLevels = _this.player().qualityLevels();
 
     // Handle options: We accept an options.default value of ( high || low )
     // This determines a bias to set initial resolution selection.
-    if (options && options.default) {
-      if (options.default === 'low') {
-        for (let index = 0; i < qualityLevels.length; index++) {
+    if (options && options["default"]) {
+      if (options["default"] === 'low') {
+        for (var index = 0; i < qualityLevels.length; index++) {
           qualityLevels[index].enabled = index === 0;
         }
-      } else if (options.default === 'high') {
-        for (let index = 0; index < qualityLevels.length; index++) {
-          qualityLevels[index].enabled = index === qualityLevels.length - 1;
+      } else if (options["default"] === 'high') {
+        for (var _index = 0; _index < qualityLevels.length; _index++) {
+          qualityLevels[_index].enabled = _index === qualityLevels.length - 1;
         }
       }
     }
 
     // Bind update to qualityLevels changes
-    this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs.bind(this, this.update));
+    _this.player().qualityLevels().on(['change', 'addqualitylevel'], videojs.bind(_assertThisInitialized(_this), _this.update));
+    return _this;
   }
 
   /**
@@ -95,7 +118,8 @@ class SourceMenuButton extends MenuButton {
    *
    * @return {Element} The sum of the two numbers.
   */
-  createEl() {
+  var _proto = SourceMenuButton.prototype;
+  _proto.createEl = function createEl() {
     return videojs.dom.createEl('div', {
       className: 'vjs-http-source-selector vjs-menu-button vjs-menu-button-popup vjs-control vjs-button'
     });
@@ -105,8 +129,8 @@ class SourceMenuButton extends MenuButton {
    * Create SourceMenuItems and sort them
    *
    * @return {SourceMenuItem[]} The sum of the two numbers.
-  */
-  buildCSSClass() {
+  */;
+  _proto.buildCSSClass = function buildCSSClass() {
     return MenuButton.prototype.buildCSSClass.call(this);
   }
 
@@ -114,8 +138,8 @@ class SourceMenuButton extends MenuButton {
    * Update the menu button
    *
    * @return {any} _
-  */
-  update() {
+  */;
+  _proto.update = function update() {
     return MenuButton.prototype.update.call(this);
   }
 
@@ -123,23 +147,23 @@ class SourceMenuButton extends MenuButton {
    * Create SourceMenuItems and sort them
    *
    * @return {SourceMenuItem[]} Sorted array of SourceMenuItems
-  */
-  createItems() {
-    const menuItems = [];
-    const levels = this.player().qualityLevels();
-    const labels = [];
-    for (let index = levels.length - 1; index >= 0; index--) {
-      const selected = index === levels.selectedIndex;
+  */;
+  _proto.createItems = function createItems() {
+    var menuItems = [];
+    var levels = this.player().qualityLevels();
+    var labels = [];
+    for (var index = levels.length - 1; index >= 0; index--) {
+      var selected = index === levels.selectedIndex;
 
       // Display height if height metadata is provided with the stream, else use bitrate
-      let label = `${index}`;
-      let sortValue = index;
-      const level = levels[index];
+      var label = "" + index;
+      var sortValue = index;
+      var level = levels[index];
       if (level.height) {
-        label = `${level.height}p`;
+        label = level.height + "p";
         sortValue = Number.parseInt(level.height, 10);
       } else if (level.bitrate) {
-        label = `${Math.floor(level.bitrate / 1e3)} kbps`;
+        label = Math.floor(level.bitrate / 1e3) + " kbps";
         sortValue = Number.parseInt(level.bitrate, 10);
       }
 
@@ -149,10 +173,10 @@ class SourceMenuButton extends MenuButton {
       }
       labels.push(label);
       menuItems.push(new SourceMenuItem(this.player_, {
-        label,
-        index,
-        selected,
-        sortValue
+        label: label,
+        index: index,
+        selected: selected,
+        sortValue: sortValue
       }));
     }
 
@@ -162,7 +186,7 @@ class SourceMenuButton extends MenuButton {
         label: 'Auto',
         index: levels.length,
         selected: false,
-        sortValue: 99_999
+        sortValue: 99999
       }));
     }
 
@@ -171,12 +195,13 @@ class SourceMenuButton extends MenuButton {
       return b.options_.sortValue - a.options_.sortValue;
     });
     return menuItems;
-  }
-}
+  };
+  return SourceMenuButton;
+}(MenuButton);
 
 // Default options for the plugin.
-const defaults = {};
-const registerPlugin = videojs.registerPlugin;
+var defaults = {};
+var registerPlugin = videojs.registerPlugin;
 // const dom = videojs.dom || videojs;
 
 /**
@@ -196,7 +221,7 @@ const registerPlugin = videojs.registerPlugin;
 * @return {boolean}
 *         Returns false if not use Html5 tech
 */
-const onPlayerReady = (player, options) => {
+var onPlayerReady = function onPlayerReady(player, options) {
   player.addClass('vjs-http-source-selector');
   // This plugin only supports level selection for HLS playback
   if (player.techName_ !== 'Html5') {
@@ -212,8 +237,8 @@ const onPlayerReady = (player, options) => {
     // hack for plugin idempodency... prevents duplicate menubuttons from being inserted into the player if multiple player.httpSourceSelector() functions called.
     if (!player.videojsHTTPSouceSelectorInitialized) {
       player.videojsHTTPSouceSelectorInitialized = true;
-      const controlBar = player.controlBar;
-      const fullscreenToggle = controlBar.getChild('fullscreenToggle');
+      var controlBar = player.controlBar;
+      var fullscreenToggle = controlBar.getChild('fullscreenToggle');
       if (fullscreenToggle) {
         controlBar.el().insertBefore(controlBar.addChild('SourceMenuButton').el(), fullscreenToggle.el());
       } else {
@@ -235,10 +260,12 @@ const onPlayerReady = (player, options) => {
   * @param    {Object} [options={}]
   *           An object of options left to the plugin author to define.
   */
-const httpSourceSelector = function (options) {
-  this.ready(() => {
-    const merge = videojs?.obj?.merge || videojs.mergeOptions;
-    onPlayerReady(this, merge(defaults, options));
+var httpSourceSelector = function httpSourceSelector(options) {
+  var _this = this;
+  this.ready(function () {
+    var _videojs$obj;
+    var merge = (videojs == null ? void 0 : (_videojs$obj = videojs.obj) == null ? void 0 : _videojs$obj.merge) || videojs.mergeOptions;
+    onPlayerReady(_this, merge(defaults, options));
   });
   videojs.registerComponent('SourceMenuButton', SourceMenuButton);
   videojs.registerComponent('SourceMenuItem', SourceMenuItem);

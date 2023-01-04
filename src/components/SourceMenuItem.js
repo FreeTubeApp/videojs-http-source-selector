@@ -14,7 +14,7 @@ class SourceMenuItem extends MenuItem {
    * @param {videojs.Player} player
    * A videojs player
    *
-   * @param {{label, index, selected, sortVal, selectable: true, multiSelectable: false}} options
+   * @param {{label, index, selected, sortValue, selectable: true, multiSelectable: false}} options
    * Multiselectable
    *
   */
@@ -33,11 +33,11 @@ class SourceMenuItem extends MenuItem {
 
     super.handleClick();
 
-    const levels = this.player().qualityLevels();
+    const levels = Array.from(this.player().qualityLevels());
 
-    for (const [level, index] of levels.entries().entries()) {
-      level.enabled = selected.index === levels.length || selected.index === index;
-    }
+    levels.forEach((level, index) => {
+      level.enabled = selected.index === levels.length || selected.index === index
+    });
   }
 
   /**

@@ -13,10 +13,13 @@
     "build": "concurrently \"npm:build:cs*\" \"npm:build:js\" \"npm:docs\" && npm run add-headers",
     "build:css": "node-sass src/plugin.scss dist/videojs-http-source-selector.css",
     "build:css:min": "node-sass src/plugin.scss dist/videojs-http-source-selector.min.css --output-style=compressed --linefeed=lf",
-    "build:js": "concurrently \"npm:build:js:*\" && npm run build:uglify",
+    "build:js": "concurrently \"npm:build:js:*\" && concurrently \"npm:build:uglify:*\"",
     "build:js:rollup-modules": "rollup -c scripts/modules.rollup.config.js",
+    "build:js:rollup-modules-legacy": "rollup -c scripts/modules-legacy.rollup.config.js",
     "build:js:rollup-umd": "rollup -c scripts/umd.rollup.config.js",
-    "build:uglify": "uglifyjs dist/videojs-http-source-selector.js --comments --mangle --compress  -o dist/videojs-http-source-selector.min.js",
+    "build:js:rollup-umd-legacy": "rollup -c scripts/umd-legacy.rollup.config.js",
+    "build:uglify:modern": "uglifyjs dist/videojs-http-source-selector.js --comments --mangle --compress  -o dist/videojs-http-source-selector.min.js",
+    "build:uglify:legacy": "uglifyjs dist/legacy/videojs-http-source-selector.js --comments --mangle --compress  -o dist/legacy/videojs-http-source-selector.min.js",
     "add-headers": "dist-header dist",
     "clean": "rimraf dist test/dist",
     "docs": "jsdoc src -r -c jsdoc.json -d docs/api",
@@ -50,7 +53,7 @@
   ],
   "peerDependencies": {
     "video.js": "^6 || ^7 || ^8",
-    "videojs-contrib-quality-levels": "^3.0.0"
+    "videojs-contrib-quality-levels": "^2 || ^3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
