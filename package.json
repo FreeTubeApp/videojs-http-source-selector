@@ -79,7 +79,7 @@
     "rimraf": "^4.0.7",
     "rollup": "^3.9.1",
     "uglify-js": "^3.17.4",
-    "video.js": "^7",
+    "video.js": "^8",
     "videojs-contrib-quality-levels": "^3.0.0"
   }
 }
