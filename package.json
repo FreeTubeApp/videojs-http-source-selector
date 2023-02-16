@@ -60,7 +60,7 @@
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
-    "add-dist-header": "^0.3.7",
+    "add-dist-header": "^1.0.0",
     "concurrently": "^7.6.0",
     "eslint": "^8.31.0",
     "eslint-config-videojs": "^6.0.0",
