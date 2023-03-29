@@ -61,7 +61,7 @@
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "add-dist-header": "^1.0.0",
-    "concurrently": "^7.6.0",
+    "concurrently": "^8.0.1",
     "eslint": "^8.31.0",
     "eslint-config-videojs": "^6.0.0",
     "eslint-plugin-import": "^2.26.0",
