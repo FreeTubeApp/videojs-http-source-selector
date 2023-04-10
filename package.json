@@ -73,7 +73,7 @@
     "in-publish": "^2.0.1",
     "jsdoc": "^4.0.0",
     "node-sass": "^8.0.0",
-    "rimraf": "^4.0.7",
+    "rimraf": "^5.0.0",
     "rollup": "^3.9.1",
     "uglify-js": "^3.17.4",
     "video.js": "^8",
