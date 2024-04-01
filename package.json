@@ -67,7 +67,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^48.0.2",
     "eslint-plugin-n": "^16.0.0",
-    "eslint-plugin-sonarjs": "^0.24.0",
+    "eslint-plugin-sonarjs": "^0.25.0",
     "eslint-plugin-unicorn": "^51.0.1",
     "global": "^4.4.0",
     "in-publish": "^2.0.1",
